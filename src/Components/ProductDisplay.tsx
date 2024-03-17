@@ -4,7 +4,7 @@ import '../styles/TextStyles.css'
 
 export default function ProductDisplay(props) {
     
-    const product = props.props;
+    const product = props.product;
 
     return (
         <div className="left-column-contents">

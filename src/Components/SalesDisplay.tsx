@@ -44,7 +44,7 @@ export default function SalesDisplay() {
   return (
     <div className='container'>
       <div className='left-column'>
-        <ProductDisplay props={data}></ProductDisplay>
+        <ProductDisplay product={data}></ProductDisplay>
       </div>
       <div className='right-column'>
         <div>
