@@ -35,8 +35,6 @@ export default function SalesDisplay() {
     fetchData();
   },[dispatch]) 
 
-  if (data === null) dispatch(setData(json[0]));
-  
   // the display is two columns with product details on the left hand side and
   // sales data (grid and graph) on the right hand side. If necessary, the right
   // hand side will scroll
