@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store.ts';
 import { setData } from '../redux/dataSlice.ts';
-import json from '../data.json';
+import copy from '../data_copy.json'
 
 export default function SalesDisplay() {
 
@@ -16,25 +16,35 @@ export default function SalesDisplay() {
   const dispatch = useDispatch();
   const data = useSelector((state: RootState) => state.data.data);
 
-  // since data is constant in this prototype useEffect does not contain dependencies.
+  // since data is constant in this prototype useEffect does not contain 
+  // dependencies relating to the data itself
   // This could be different in a production environment where the product may
   // switch during runtime or data may update
   useEffect(() =>{
     const fetchData = async () => {
-      try {
-        const response = await fetch('../data.json');
-        const jsonData = await response.json();
-        console.log(jsonData);
-        dispatch(setData(jsonData)); //data in this example is a single item. Data model could potentially be mutated to loop over several items
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // fake API call will fail in localhost. Fall back to directly grapping data
-        const jsonData = json[0];
-        dispatch(setData(jsonData));
-      }
-    };
+      fetch('/sales-data.json')
+        .then(response => response.json())
+        .then((json) => {
+          // in this example only one product should occupy the screen
+          // the data model could be shifted to account for several products
+          // such as in a multi product display
+          if (Array.isArray(json) && json.length > 0) {
+            const product = json[0];
+            dispatch(setData(product));
+          } 
+          else {
+            throw new Error('JSON data is empty or not an array');
+          }
+        }) 
+    }
     fetchData();
   },[dispatch]) 
+
+  // sanity check. If for some reason the API fails fall
+  // back to local copy
+  if (data === null) {
+    dispatch(setData(copy[0]));
+  }
 
   // the display is two columns with product details on the left hand side and
   // sales data (grid and graph) on the right hand side. If necessary, the right
