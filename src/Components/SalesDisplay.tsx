@@ -24,7 +24,7 @@ export default function SalesDisplay() {
       try {
         const response = await fetch('../data.json');
         const jsonData = await response.json();
-        dispatch(setData(jsonData)); //data in this example is a single item. Data model could be mutated to loop over several items potentially
+        dispatch(setData(jsonData[0])); //data in this example is a single item. Data model could potentially be mutated to loop over several items
       } catch (error) {
         console.error('Error fetching data:', error);
         // fake API call will fail in localhost. Fall back to directly grapping data
