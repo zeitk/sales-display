@@ -1,0 +1,10 @@
+.product-title {
+    font-size: larger;
+    color: black;
+    font-weight: bold;
+}
+
+.product-subtitle {
+    font-size: small;
+    color: slategray;
+}
