@@ -13,7 +13,6 @@ export default function SalesGrid(props: any) {
         setSortConfig({columnKey, sortDirection: dir});
     }
 
-    console.log(props);
     const salesData = React.useMemo(() => {
         let salesData = [...props.salesData];
 
